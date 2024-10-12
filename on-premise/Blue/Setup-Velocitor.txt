@@ -1,0 +1,31 @@
+Invoke-WebRequest -Uri "https://github.com/Velocidex/velociraptor/releases/download/v0.72/velociraptor-v0.72.4-linux-amd64" -OutFile "velociraptor-v0.72.4-linux-amd64"
+
+Invoke-WebRequest -Uri "https://github.com/Velocidex/velociraptor/releases/download/v0.72/velociraptor-v0.72.4-windows-amd64.exe" -OutFile "velociraptor-v0.72.4-windows-amd64.exe"
+
+.\velociraptor-v0.72.4-windows-amd64.exe config generate -i
+# 10.0.1.11
+# admin:Password@1
+
+
+.\velociraptor-v0.72.4-windows-amd64.exe --config server.config.yaml debian server --binary velociraptor-v0.72.4-linux-amd64
+
+scp .\velociraptor_server_0.72.4_amd64.deb azureuser@10.0.1.11:/tmp/
+
+
+## Used in Setup-Velociraptor.sh (Below)
+
+ssh azureuser@10.0.1.11
+
+sudo dpkg -i /tmp/velociraptor_server_0.72.4_amd64.deb
+
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+sudo dpkg -i google-chrome-stable_current_amd64.deb
+
+# Remote Desktop
+https://127.0.0.1:8889
+admin:Password@1
+
+https://10.0.1.10
+admin:<password_generated>
+?jDoC?wEB0+Cm.v87mp1bwmM6RIRgv?o
