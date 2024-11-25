@@ -1,0 +1,27 @@
+#!/usr/bin/expect
+
+# Arguments:
+#   $argv0 -> Pattern to wait for (e.g., "PS>")
+#   $argv1 -> tmux session name
+
+# Set no timeout
+set timeout -1
+
+# Step 1: Get the arguments
+set prompt [lindex $argv 0]
+set session [lindex $argv 1]
+
+# Step 2: Continuously capture tmux pane output and wait for the prompt
+while {1} {
+    # Capture the tmux pane's output
+    set output [exec tmux capture-pane -t $session -p]
+
+    # Check if the output contains the desired prompt
+    if {[string match "*$prompt*" $output]} {
+        # Exit the loop once the prompt is detected
+        break
+    }
+
+    # Sleep for a short interval to avoid overloading the CPU
+    sleep 1
+}
